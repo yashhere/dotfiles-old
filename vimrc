@@ -20,7 +20,7 @@ set lazyredraw                  "redraw only when we need to.
 set showmatch                   "highlight matching [{()}]
 set title                       "Set the terminal title
 set ruler                       "Enable limited line numbering
-set spell spelllang=en_us
+"set spell spelllang=en_us
 " This makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
 " http://items.sjbach.com/319/configuring-vim-right
@@ -101,6 +101,7 @@ call plug#begin('~/.vim/plugged')
   "	Plug 'https://github.com/chriskempson/vim-tomorrow-theme'
 	Plug 'vim-airline/vim-airline-themes'
   Plug 'alessandroyorba/despacio'
+  Plug 'chriskempson/base16-vim'
 
 	" ## Markdown
 	" Plug 'nelstrom/vim-markdown-folding'
@@ -144,6 +145,7 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/plugged/YouCompleteMe/third_party/ycmd
 :autocmd VimEnter * :AirlineRefresh
 
 "turn on syntax highlighting
+"let base16colorspace=256  " Access colors present in 256 colorspace
 set background=dark
 let python_highlight_all=1
 syntax on
@@ -151,7 +153,7 @@ syntax enable
 "set t_Co=256
 "colorscheme Tomorrow-Night
 let g:despacio_Campfire = 1
-colorscheme despacio
+"colorscheme despacio
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
