@@ -24,7 +24,7 @@ margin-bottom = 5
 screenchange-reload = true
 
 [bar/bottom]
-modules-left = mpd
+modules-left = mpd cmus powermenu
 ;modules-center = cpu memory eth temperature date volume
 modules-center = i3
 modules-right =
@@ -103,6 +103,16 @@ wrapping-scroll = true
 strip-wsnumbers = true
 pin-workspaces = true
 
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-default = " "
+
 label-mode-padding = 2
 ;label-mode-foreground = #0088CC
 label-mode-foreground = #4F5B47
@@ -167,7 +177,7 @@ animation-charging-framerate = 750
 [module/cmus]
 type = custom/script
 
-exec = sh ~/.config/polybar/cmus.sh
+exec = bash ~/.config/polybar/cmus.sh
 exec-if = pgrep -x cmus
 interval = 1
 
@@ -176,34 +186,29 @@ click-right = cmus-remote --stop
 
 [module/mpd]
 type = internal/mpd
-host = 127.0.0.1
-interval = 2
-format-online = <toggle> <label-song>
+format-online = <label-song>
 
-label-song = %artist% - %title%
-label-song-maxlen     = 50
-label-song-ellipsis   = true
+icon-prev = 
+icon-seekb = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-seekf = 
+icon-next = 
 
-label-offline = 🎜 mpd is offline
+label-song-maxlen = 40
+label-song-ellipsis = true
 
-icon-play = 
-icon-pause = 
-icon-stop = ⏹
-icon-prev = ⏮
-icon-next = ⏭
-icon-seekb = ⏪
-icon-seekf = ⏩
-icon-random = 🔀
-icon-repeat = 🔁
-icon-repeatone = 🔂
-
-toggle-on-foreground = #ff
-toggle-off-foreground = #55
-
-bar-progress-width = 45
+bar-progress-width = 15
 bar-progress-indicator = |
+bar-progress-indicator-foreground = #ff
+bar-progress-indicator-font = 2
 bar-progress-fill = ─
+bar-progress-fill-font = 2
+bar-progress-fill-foreground = #ff
 bar-progress-empty = ─
+bar-progress-empty-font = 2
+bar-progress-empty-foreground = ${colors.foreground-alt}
 
 [module/wifi]
 type = internal/network
@@ -270,4 +275,30 @@ bar-volume-fill-font = 2
 bar-volume-empty = ─
 bar-volume-empty-font = 2
 
+[module/powermenu]
+type = custom/menu
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.foreground}
+label-close = cancel
+label-close-foreground = ${colors.foreground}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = systemctl -h now
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
 ; vim:ft=dosini

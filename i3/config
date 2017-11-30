@@ -110,18 +110,19 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+workspace_auto_back_and_forth yes
 bindsym $mod+Tab workspace back_and_forth
 
 set $workspace1 "1 "
 set $workspace2 "2 </>"
-set $workspace3 "3 "
-set $workspace4 "4 "
-set $workspace5 "5 "
-set $workspace6 "6 "
-set $workspace7 "7 "
-set $workspace8 "8 "
-set $workspace9 "9 "
-set $workspace10 "10 "
+set $workspace3 "3 "
+set $workspace4 "4 "
+set $workspace5 "5 "
+set $workspace6 "6 "
+set $workspace7 "7 "
+set $workspace8 "8 "
+set $workspace9 "9 "
+set $workspace10 "10 "
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -183,7 +184,20 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
+mode "gaps" {
+        bindsym Down gaps inner all minus 1
+        bindsym Left gaps outer all minus 1
+        bindsym Up gaps inner all plus 1
+        bindsym Right gaps outer all plus 1
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym Tab    mode "default"
+}
+
 bindsym $mod+r mode "resize"
+bindsym $mod+g mode "gaps"
 
 # sticky window
 bindsym $mod+Shift+s sticky toggle
@@ -255,10 +269,41 @@ exec --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpaper.jpg
 # Run unclutter when starting
 exec --no-startup-id unclutter
 exec --no-startup-id xrandr --dpi 112
-
+exec --no-startup-id xsettingsd
+exec --no-startup-id mpd
+exec killall -q notify-send
+exec --no-startup-id dunst
 
 client.focused #99cc99 #99cc99 #000000 #2d2d2d
 client.focused_inactive #393939 #393939 #888888 #292d2e
 client.unfocused #2d2d2d #2d2d2d #999999 #292d2e
 client.urgent #2f343a #900000 #ffffff #900000
 
+
+## file manager
+bindsym $mod+Shift+f exec thunar;workspace 3;focus
+
+## bar toggle, hide or show
+bindsym $mod+b bar mode toggle
+
+
+## assign window, you can find window class using xprop
+## workspace 2 (Terminals)
+assign [class=Termite|URxvt] $workspace2
+## workspace 1 (web browsers)
+assign [class=Firefox|Chromium|Google-chrome|Opera|Transmission-gtk] $workspace1
+## workspace 3 (file-manager)
+assign [class=Thunar|File-roller] $workspace3
+
+## workspace 4 (media-players)
+assign [class=vlc] $workspace4
+
+## workspace 5 (Sublime Text)
+assign [class=Sublime_text] $workspace5
+
+## focus on launch
+for_window [class=Termite|URxvt] focus
+
+
+## image viewer need floating
+for_window [class=Gpicview|Viewnior|feh] floating enable

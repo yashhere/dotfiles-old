@@ -4,13 +4,13 @@ cmusstatus=$(cmus-remote -C status)
 grep position <<< "$cmusstatus" 1>/dev/null 2>&1
 if [ ! $? -eq 0 ]; then exit; fi
 
-strindex() {
-  x="${1%%$2*}"
-  [[ "$x" = "$1" ]] && echo -1 || echo "${#x}"
-}
-
 prepend_zero () {
     seq -f "%02g" $1 $1
+}
+
+strindex() { 
+  x="${1%%$2*}"
+  [[ "$x" = "$1" ]] && echo -1 || echo "${#x}"
 }
 
 get_all_but_first() {
@@ -25,8 +25,16 @@ get_stat() {
   echo "$(get_all_but_first $sub)"
 }
 
-min_sec_from_sec() {
-  echo -n "$(prepend_zero $(($1 / 60))):$(prepend_zero $(($1 % 60)))"
-}
 
-echo -n "$(get_stat artist)  -  $(get_stat title)  [$(min_sec_from_sec $(get_stat position)) / $(min_sec_from_sec $(get_stat duration))]"
+artist=$(echo -n $(get_stat artist))
+song=$(echo -n $(get_stat title))
+
+position=$(get_stat position)
+minutes1=$(prepend_zero $(($position / 60 )))
+seconds1=$(prepend_zero $(($position % 60)))
+
+duration=$(get_stat duration)
+minutes2=$(prepend_zero $(($position / 60)))
+seconds2=$(prepend_zero $(($duration % 60)))
+
+echo -n "$artist  -  $song [$minutes1:$seconds1 / $minutes2:$seconds2]"
