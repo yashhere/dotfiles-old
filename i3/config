@@ -113,15 +113,15 @@ bindsym $mod+a focus parent
 workspace_auto_back_and_forth yes
 bindsym $mod+Tab workspace back_and_forth
 
-set $workspace1 "1 "
-set $workspace2 "2 </>"
-set $workspace3 "3 "
-set $workspace4 "4 "
-set $workspace5 "5 "
-set $workspace6 "6 "
-set $workspace7 "7 "
-set $workspace8 "8 "
-set $workspace9 "9 "
+set $workspace1 "1 Chrome"
+set $workspace2 "2 Terminal"
+set $workspace3 "3 Files"
+set $workspace4 "4 Sublime"
+set $workspace5 "5 Firefox"
+set $workspace6 "6 Code"
+set $workspace7 "7 Music"
+set $workspace8 "8 Images"
+set $workspace9 "9 Other"
 set $workspace10 "10 "
 
 # switch to workspace
@@ -153,12 +153,6 @@ bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-
-# exit i3
-bindsym $mod+Shift+e exec /home/yash/.config/i3/scripts/exit_menu
-
-# exit i3 (logs you out of your X session)
-#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -254,17 +248,17 @@ exec_always --no-startup-id "killall -q compton; compton --config ~/.config/i3/c
 exec_always --no-startup-id "killall -q dunst; dunst -config ~/.config/i3/dunst"
 
 # specific window settings
-for_window [class="Nemo" instance="^desktop_window$"] floating disable
+for_window [class="Nemo|Thunar" instance="^desktop_window$"] floating disable
 
 # chrome extension popups
 for_window [instance="^crx.*$" window_role="pop-up"]  floating enable
-for_window [instance="^crx.*$" window_role="pop-up"]  sticky   enable
+for_window [instance="^crx.*$" window_role="pop-up"]  sticky enable
 
 # Prepend title with program name
 for_window [class=".*"] title_format "%class - %title"
 
 # Change Wallpaper
-exec --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpaper.jpg
+exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpaper.jpg
 
 # Run unclutter when starting
 exec --no-startup-id unclutter
@@ -273,6 +267,7 @@ exec --no-startup-id xsettingsd
 exec --no-startup-id mpd
 exec killall -q notify-send
 exec --no-startup-id dunst
+exec_always --no-startup-id numlockx on
 
 client.focused #99cc99 #99cc99 #000000 #2d2d2d
 client.focused_inactive #393939 #393939 #888888 #292d2e
@@ -286,24 +281,47 @@ bindsym $mod+Shift+f exec thunar;workspace 3;focus
 ## bar toggle, hide or show
 bindsym $mod+b bar mode toggle
 
-
 ## assign window, you can find window class using xprop
+
 ## workspace 2 (Terminals)
-assign [class=Termite|URxvt] $workspace2
+assign [class=Gnome-terminal|Termite|URxvt] $workspace2
+
 ## workspace 1 (web browsers)
-assign [class=Firefox|Chromium|Google-chrome|Opera|Transmission-gtk] $workspace1
+assign [class=Chromium|Google-chrome] $workspace1
+
 ## workspace 3 (file-manager)
-assign [class=Thunar|File-roller] $workspace3
+assign [class=Nemo|Thunar|File-roller] $workspace3
 
-## workspace 4 (media-players)
-assign [class=vlc] $workspace4
+## workspace 7 (media-players)
+assign [class=vlc|Rhythmbox|cmus] $workspace7
 
-## workspace 5 (Sublime Text)
-assign [class=Sublime_text] $workspace5
+## workspace 5 (Firefox)
+assign [class=".*(F|f)irefox.*"] $workspace5
+
+## workspace 4 (Sublime Text)
+assign [class=Sublime_text] $workspace4
+
+## workspace 6 (Other Editors)
+assign [class=Code|Gedit|Atom|Xed] $workspace6
+
+## workspace 8 (Image Viewers)
+assign [class=Pix|Xviewer|feh] $workspace8
 
 ## focus on launch
 for_window [class=Termite|URxvt] focus
 
-
 ## image viewer need floating
-for_window [class=Gpicview|Viewnior|feh] floating enable
+#for_window [class=Pix|Xviewer|feh] floating enable
+
+set $mode_system System (e) logout, (r) reboot, (S) shutdown
+mode "$mode_system" {
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+e mode "$mode_system"
