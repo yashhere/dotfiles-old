@@ -124,12 +124,9 @@ if [ -x /usr/bin/mint-fortune ]; then
      /usr/bin/mint-fortune
 fi
 
-# added by Anaconda3 installer
-export PATH="/home/yash/anaconda3/bin:$PATH"
-
 # base-16 manager configuration
 BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+#[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 
 # npm installation without sudo
@@ -159,10 +156,10 @@ export GIT_HOSTING='git@git.domain.com'
 unset MAILCHECK
 
 # Change this to your console based IRC client of choice.
-export IRC_CLIENT='irssi'
+#export IRC_CLIENT='irssi'
 
 # Set this to the command you use for todo.txt-cli
-export TODO="t"
+#export TODO="t"
 
 # Set this to false to turn off version control status checking within the prompt for all themes
 export SCM_CHECK=true
@@ -191,3 +188,45 @@ export SCM_CHECK=true
 
 # Load Bash It
 source "$BASH_IT"/bash_it.sh
+export GPG_TTY=$(tty)
+
+# added by Genymotion installer
+export PATH="/home/yash/genymotion:$PATH"
+
+source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
+
+# SWITCH TO ANACONDA PYTHON INTERPRETER
+#alias anaconda_py='source ~/anaconda3/anaconda_env.sh'
+
+# Append Anaconda so that it doesn't override system Python
+#export PATH="$PATH:/home/yash/anaconda3/bin"
+#export PYTHONPATH="$PYTHONPATH:/home/yash/anaconda3/lib/python3.6/site-packages"
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+if [[ -z "$TMUX" ]] ;then
+    ID="$( tmux ls | grep -vm1 attached | cut -d: -f1 )" # get the id of a deattached session
+    if [[ -z "$ID" ]] ;then # if not available create a new one
+        tmux new-session
+    else
+        tmux attach-session -t "$ID" # if available attach to it
+    fi
+fi
+
+if [ -f ~/.ssh/agent.env ] ; then
+    . ~/.ssh/agent.env > /dev/null
+    if ! kill -0 $SSH_AGENT_PID > /dev/null 2>&1; then
+        echo "Stale agent file found. Spawning new agent… "
+        eval `ssh-agent | tee ~/.ssh/agent.env`
+        ssh-add
+    fi
+else
+    echo "Starting ssh-agent"
+    eval `ssh-agent | tee ~/.ssh/agent.env`
+    ssh-add
+fi
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
