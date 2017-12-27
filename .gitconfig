@@ -30,12 +30,14 @@
 [merge]
   conflictstyle = diff3
   tool = meld
+	stat = true
 
 [credential]
   helper = cache --timeout=3600
 
 [diff]
   mnemonicprefix = true
+	renames = copies
 
 [branch]
   autosetuprebase = always
@@ -81,3 +83,15 @@
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+
+; [commit]
+	; gpgsign = true
+  ;
+[help]
+	autocorrect = 1
+
+[advice]
+	statusHints = false
+
+[rerere]
+	enabled = true
