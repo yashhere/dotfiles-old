@@ -8,8 +8,8 @@
 ;=====================================================
 
 [colors]
-background = #222
-background-alt = #444
+background = #232c31
+background-alt = #232c31
 foreground = #dfdfdf
 foreground-alt = #55
 primary = #ffb52a
@@ -29,7 +29,8 @@ modules-left = i3
 modules-center = powermenu
 modules-right = cpu filesystem memory
 
-font-0 = "Noto Sans:size=11;2"
+font-0 = "System San Francisco Display:size=11;2"
+#font-0 = "Noto Sans:size=11;2"
 font-1 = "FontAwesome:size=11;2"
 
 ;background = transparent
@@ -72,7 +73,8 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = Noto Sans:size=10;2
+font-0 = System San Francisco Display:size=10;2
+; font-0 = Noto Sans:size=10;2
 font-1 = FontAwesome:size=11
 
 modules-left = title
@@ -330,7 +332,7 @@ type = internal/memory
 interval = 2
 format = <label>
 
-label = RAM %gb_used%/%gb_free%
+label = RAM %gb_used%/%gb_total%
 
 bar-used-indicator =
 bar-used-width = 50
