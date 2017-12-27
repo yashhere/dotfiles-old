@@ -13,7 +13,8 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Noto Sans 9.7
+#font pango:Noto Sans 9.7
+font pango:System San Francisco Display 10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -112,6 +113,10 @@ bindsym $mod+a focus parent
 
 workspace_auto_back_and_forth yes
 bindsym $mod+Tab workspace back_and_forth
+
+# Cycle through active workspaces
+bindsym $mod+grave workspace next
+bindsym $mod+Shift+grave workspace prev
 
 set $workspace1 "1 Chrome"
 set $workspace2 "2 Terminal"
@@ -268,6 +273,7 @@ exec --no-startup-id mpd
 exec killall -q notify-send
 exec --no-startup-id dunst
 exec_always --no-startup-id numlockx on
+exec_always ~/.config/i3/scripts/gnome-keyring.sh
 
 client.focused #99cc99 #99cc99 #000000 #2d2d2d
 client.focused_inactive #393939 #393939 #888888 #292d2e
@@ -276,7 +282,7 @@ client.urgent #2f343a #900000 #ffffff #900000
 
 
 ## file manager
-bindsym $mod+Shift+f exec thunar;workspace 3;focus
+bindsym $mod+Shift+f exec nemo;workspace 3;focus
 
 ## bar toggle, hide or show
 bindsym $mod+b bar mode toggle
@@ -307,8 +313,12 @@ assign [class=Code|Gedit|Atom|Xed] $workspace6
 ## workspace 8 (Image Viewers)
 assign [class=Pix|Xviewer|feh] $workspace8
 
+## workspace 9 (Messaging)
+assign [class=Riot|Hexchat|Xchat-gnome] $workspace9
+
 ## focus on launch
-for_window [class=Termite|URxvt] focus
+for_window [class=Termite|URxvt|Pix|Xviewer|feh|gedit|Xed|jetbrains-pycharm-ce|vlc] focus
+for_window [class="^Chrome$" title=" - Chromium$"] border none
 
 ## image viewer need floating
 #for_window [class=Pix|Xviewer|feh] floating enable
