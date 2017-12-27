@@ -128,10 +128,8 @@ fi
 BASE16_SHELL=$HOME/.config/base16-shell/
 #[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
-
 # npm installation without sudo
 NPM_PACKAGES="${HOME}/.npm-packages"
-
 PATH="$NPM_PACKAGES/bin:$PATH"
 
 # Unset manpath so we can inherit from /etc/manpath via the `manpath` command
@@ -156,7 +154,7 @@ export GIT_HOSTING='git@git.domain.com'
 unset MAILCHECK
 
 # Change this to your console based IRC client of choice.
-#export IRC_CLIENT='irssi'
+export IRC_CLIENT='irssi'
 
 # Set this to the command you use for todo.txt-cli
 #export TODO="t"
@@ -167,53 +165,46 @@ export SCM_CHECK=true
 # Set Xterm/screen/Tmux title with only a short hostname.
 # Uncomment this (or set SHORT_HOSTNAME to something else),
 # Will otherwise fall back on $HOSTNAME.
-#export SHORT_HOSTNAME=$(hostname -s)
+export SHORT_HOSTNAME=$(hostname -s)
 
 # Set Xterm/screen/Tmux title with only a short username.
 # Uncomment this (or set SHORT_USER to something else),
 # Will otherwise fall back on $USER.
-#export SHORT_USER=${USER:0:8}
+export SHORT_USER=${USER:0:8}
 
 # Set Xterm/screen/Tmux title with shortened command and directory.
 # Uncomment this to set.
-#export SHORT_TERM_LINE=true
+export SHORT_TERM_LINE=true
 
 # Set vcprompt executable path for scm advance info in prompt (demula theme)
 # https://github.com/djl/vcprompt
-#export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
+export VCPROMPT_EXECUTABLE=~/.vcprompt/bin/vcprompt
 
 # (Advanced): Uncomment this to make Bash-it reload itself automatically
 # after enabling or disabling aliases, plugins, and completions.
-# export BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE=1
+export BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE=1
 
 # Load Bash It
 source "$BASH_IT"/bash_it.sh
 export GPG_TTY=$(tty)
 
 # added by Genymotion installer
-export PATH="/home/yash/genymotion:$PATH"
+#export PATH="/home/yash/genymotion:$PATH"
 
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
-
-# SWITCH TO ANACONDA PYTHON INTERPRETER
-#alias anaconda_py='source ~/anaconda3/anaconda_env.sh'
-
-# Append Anaconda so that it doesn't override system Python
-#export PATH="$PATH:/home/yash/anaconda3/bin"
-#export PYTHONPATH="$PYTHONPATH:/home/yash/anaconda3/lib/python3.6/site-packages"
+#source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+#source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-if [[ -z "$TMUX" ]] ;then
-    ID="$( tmux ls | grep -vm1 attached | cut -d: -f1 )" # get the id of a deattached session
-    if [[ -z "$ID" ]] ;then # if not available create a new one
-        tmux new-session
-    else
-        tmux attach-session -t "$ID" # if available attach to it
-    fi
-fi
+#if [[ -z "$TMUX" ]] ;then
+#    ID="$( tmux ls | grep -vm1 attached | cut -d: -f1 )" # get the id of a deattached session
+#    if [[ -z "$ID" ]] ;then # if not available create a new one
+#        tmux new-session
+#    else
+#        tmux attach-session -t "$ID" # if available attach to it
+#    fi
+#fi
 
 if [ -f ~/.ssh/agent.env ] ; then
     . ~/.ssh/agent.env > /dev/null
@@ -228,5 +219,16 @@ else
     ssh-add
 fi
 
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
+export PATH="$PATH:$HOME/bin:/home/yash/.local/bin"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+PYTHONSTARTUP=~/.pythonautocompletion.py
+
+. /etc/infinality-settings.sh
+
+# Ubuntu make installation of Ubuntu Make binary symlink
+PATH=/home/yash/.local/share/umake/bin:$PATH
