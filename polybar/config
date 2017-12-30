@@ -75,14 +75,14 @@ module-margin-right = 2
 
 font-0 = System San Francisco Display:size=10;2
 ; font-0 = Noto Sans:size=10;2
-font-1 = FontAwesome:size=11
+font-1 = FontAwesome:size=11;3
 
 modules-left = title
 modules-center = date
-modules-right = backlight redshift wifi volume battery
+modules-right = backlight redshift wifi eth volume battery
 
 tray-position = right
-tray-padding = 4
+tray-padding = 10
 tray-transparent = true
 tray-detached = true
 ;wm-restack = i3
@@ -226,7 +226,7 @@ label-connected =  [ %essid%    : %downspeed% ]
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = NET %ifname% disconnected
 ;label-disconnected-foreground = NET ${colors.foreground-alt}
-label-disconnected = Not Connected
+; label-disconnected = Not Connected
 
 ;Required if <bar-progress> is used
 bar-progress-width = 5
@@ -240,6 +240,22 @@ bar-progress-fill-font = 3
 bar-progress-empty = █
 bar-progress-empty-foreground = #555
 bar-progress-empty-font = 3
+
+[module/eth]
+type = internal/network
+interface = eno1
+interval = 2.0
+
+; format-connected-underline = #55aa55
+; format-connected-prefix = ""
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected =   [ %local_ip% ]
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/date]
 type = internal/date
