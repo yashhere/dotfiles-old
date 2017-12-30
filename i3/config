@@ -62,10 +62,12 @@ bindsym $mod+Shift+q kill
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+# bindsym $mod+j focus left
+# bindsym $mod+k focus down
+# bindsym $mod+l focus up
+# bindsym $mod+semicolon focus right
+
+bindsym $mod+l exec --no-startup-id ~/.config/i3/scripts/lock.sh
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -245,6 +247,11 @@ bindsym $mod+Print exec scrot -u -e 'mv $f ~/Pictures/Screenshots/'
 bindsym $mod+d exec --no-startup-id "rofi -show run -config ~/.config/i3/rofi";
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id xfce4-power-manager
+exec --no-startup-id xautolock -time 3 -locker 'lock -t "Type Password to Unlock" -f Lucida-Grande' -detectsleep &
+
+
+
 
 # Compton
 exec_always --no-startup-id "killall -q compton; compton --config ~/.config/i3/compton.conf"
@@ -272,6 +279,9 @@ exec --no-startup-id xsettingsd
 exec --no-startup-id mpd
 exec killall -q notify-send
 exec --no-startup-id dunst
+
+# exec --no-startup-id nm-applet
+
 exec_always --no-startup-id numlockx on
 exec_always ~/.config/i3/scripts/gnome-keyring.sh
 
