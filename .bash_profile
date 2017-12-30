@@ -9,7 +9,7 @@ fi
 source ~/.profile
 
 # set PATH so it includes user's private bin directories
-PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 . /etc/infinality-settings.sh
 
