@@ -11,7 +11,7 @@
 background = #232c31
 background-alt = #232c31
 foreground = #dfdfdf
-foreground-alt = #55
+foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
@@ -48,6 +48,11 @@ height = 25
 offset-x = 0
 offset-y = 0
 
+overline-size = 0
+overline-color = #f00
+underline-size = 3
+underline-color = #fff
+
 [bar/top]
 ;monitor = VGA-0
 width = 100%
@@ -65,8 +70,8 @@ overline-color = #f00
 underline-size = 0
 underline-color = #00f
 
-;border-bottom-size = 1
-;border-bottom-color = #0088CC
+; border-bottom-size = 1
+; border-bottom-color = #0088CC
 
 padding-left = 0
 padding-right = 2
@@ -134,7 +139,7 @@ label-focused-padding = 2
 label-urgent-padding = 1
 
 label-dimmed-underline = ${BAR.background}
-label-focused-underline = #0088CC
+; label-focused-underline = #fff
 
 [module/backlight]
 type = internal/backlight

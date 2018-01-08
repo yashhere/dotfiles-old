@@ -257,7 +257,7 @@ exec --no-startup-id xautolock -time 3 -locker 'lock -t "Type Password to Unlock
 exec_always --no-startup-id "killall -q compton; compton --config ~/.config/i3/compton.conf"
 
 # Notifications
-exec_always --no-startup-id "killall -q dunst; dunst -config ~/.config/i3/dunst"
+exec_always --no-startup-id "killall -q dunst; dunst -config ~/.config/dunst/dunstrc"
 
 # specific window settings
 for_window [class="Nemo|Thunar" instance="^desktop_window$"] floating disable
@@ -270,15 +270,19 @@ for_window [instance="^crx.*$" window_role="pop-up"]  sticky enable
 for_window [class=".*"] title_format "%class - %title"
 
 # Change Wallpaper
-exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpaper.jpg
+exec_always --no-startup-id feh --randomize --bg-scale ~/Pictures/wallpapers/*
+exec --no-startup-id syndaemon -i 0.7 -t -d
 
 # Run unclutter when starting
 exec --no-startup-id unclutter
 exec --no-startup-id xrandr --dpi 112
 exec --no-startup-id xsettingsd
 exec --no-startup-id mpd
-exec killall -q notify-send
-exec --no-startup-id dunst
+exec killall -q notify-osd
+
+# Start redshift in auto mode and fallback to Calicut
+exec_always --no-startup-id "killall -q redshift; (redshift || redshift -l 11.25:75.78)"
+
 
 # exec --no-startup-id nm-applet
 
@@ -325,6 +329,9 @@ assign [class=Pix|Xviewer|feh] $workspace8
 
 ## workspace 9 (Messaging)
 assign [class=Riot|Hexchat|Xchat-gnome] $workspace9
+
+## workspace 10 (Virtualbox)
+assign [class="VirtualBox Manager"] $workspace10
 
 ## focus on launch
 for_window [class=Termite|URxvt|Pix|Xviewer|feh|gedit|Xed|jetbrains-pycharm-ce|vlc] focus
